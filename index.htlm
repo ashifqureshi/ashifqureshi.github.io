@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software Architect — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #0a0f1e;
+      --ink-light: #334155;
+      --rule:      #cbd5e1;
+      --paper:     #f8f9fb;
+      --white:     #ffffff;
+      --gold:      #b08c4a;
+      --gold-lt:   #d4a85a;
+      --accent:    #1a3a5c;
+      --accent-lt: #2a5080;
+      --fs-display: clamp(2.4rem, 5vw, 4rem);
+      --fs-h2:      clamp(1.5rem, 3vw, 2.2rem);
+      --fs-h3:      1.15rem;
+      --fs-body:    0.975rem;
+      --max:        1120px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: var(--fs-body);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto;
+      padding: 0 40px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--ink); text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--ink-light);
+      font-size: 0.875rem; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      padding: 9px 22px;
+      background: var(--accent);
+      color: #fff !important;
+      border-radius: 3px;
+      font-size: 0.8rem !important;
+      letter-spacing: 0.06em !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--accent-lt) !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+      padding-top: 64px;
+    }
+    .hero-inner {
+      max-width: var(--max); margin: 0 auto;
+      padding: 80px 40px;
+      display: grid; grid-template-columns: 1fr 380px; gap: 80px; align-items: center;
+    }
+    .hero-eyebrow {
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block;
+      width: 32px; height: 1px; background: var(--gold);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-display);
+      font-weight: 700; line-height: 1.12;
+      color: var(--ink); margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+    h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--ink-light);
+      max-width: 480px; margin-bottom: 36px;
+      line-height: 1.75;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 13px 30px;
+      background: var(--accent); color: #fff;
+      text-decoration: none; border-radius: 3px;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--accent-lt); }
+    .btn-ghost {
+      padding: 13px 30px;
+      border: 1.5px solid var(--rule); color: var(--ink);
+      text-decoration: none; border-radius: 3px;
+      font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* hero card */
+    .hero-card {
+      background: var(--ink);
+      border-radius: 6px;
+      padding: 36px;
+      color: #fff;
+    }
+    .hero-card-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700; color: #fff;
+      margin-bottom: 20px;
+    }
+    .hero-card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 600; margin-bottom: 4px;
+    }
+    .hero-card-title {
+      font-size: 0.8rem; color: var(--gold);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-card-divider { border: none; border-top: 1px solid #ffffff18; margin-bottom: 20px; }
+    .hero-stat { margin-bottom: 16px; }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 700; color: var(--gold-lt);
+    }
+    .hero-stat-label { font-size: 0.78rem; color: #94a3b8; letter-spacing: 0.04em; }
+    .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+    .hero-tag {
+      padding: 4px 10px;
+      background: #ffffff12; border-radius: 2px;
+      font-size: 0.72rem; color: #cbd5e1;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 96px 40px; }
+    .section-inner { max-width: var(--max); margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 24px; height: 1px; background: var(--gold);
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-h2); font-weight: 700;
+      color: var(--ink); margin-bottom: 48px;
+      letter-spacing: -0.01em;
+    }
+    h2 span { color: var(--accent); }
+
+    /* ── EXPERTISE ── */
+    .expertise { background: var(--paper); }
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border: 1px solid var(--rule);
+      border-radius: 4px; overflow: hidden;
+    }
+    .exp-card {
+      background: var(--white);
+      padding: 36px 32px;
+      border-right: 1px solid var(--rule);
+      transition: background 0.2s;
+    }
+    .exp-card:hover { background: #f0f4f8; }
+    .exp-card:last-child { border-right: none; }
+    .exp-icon {
+      font-size: 1.6rem; margin-bottom: 16px;
+      display: block;
+    }
+    .exp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 10px;
+    }
+    .exp-desc { font-size: 0.875rem; color: var(--ink-light); line-height: 1.7; }
+    .exp-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .exp-skill {
+      padding: 3px 9px;
+      background: var(--paper); border: 1px solid var(--rule);
+      border-radius: 2px; font-size: 0.72rem;
+      color: var(--ink-light); letter-spacing: 0.03em;
+    }
+
+    /* ── PROJECTS ── */
+    .projects { background: var(--white); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .proj-card {
+      border: 1px solid var(--rule);
+      border-radius: 4px; overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      background: var(--white);
+    }
+    .proj-card:hover {
+      box-shadow: 0 8px 32px rgba(10,15,30,0.1);
+      transform: translateY(-2px);
+    }
+    .proj-card.featured {
+      grid-column: 1 / -1;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .proj-banner {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+    }
+    .proj-card.featured .proj-banner { height: auto; min-height: 260px; }
+    .banner-blue   { background: linear-gradient(135deg, #1a3a5c, #2a5080); }
+    .banner-gold   { background: linear-gradient(135deg, #b08c4a, #7a5f28); }
+    .banner-slate  { background: linear-gradient(135deg, #334155, #1e293b); }
+    .banner-green  { background: linear-gradient(135deg, #166534, #14532d); }
+    .proj-body { padding: 28px 30px; }
+    .proj-meta {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .proj-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 10px;
+    }
+    .proj-desc { font-size: 0.875rem; color: var(--ink-light); margin-bottom: 20px; line-height: 1.7; }
+    .proj-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .proj-tag {
+      padding: 3px 9px;
+      background: var(--paper); border: 1px solid var(--rule);
+      border-radius: 2px; font-size: 0.72rem; color: var(--ink-light);
+    }
+    .proj-link {
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color 0.2s;
+    }
+    .proj-link:hover { color: var(--gold); }
+    .proj-link::after { content: '→'; }
+
+    /* ── TIMELINE ── */
+    .timeline-section { background: var(--paper); }
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px; background: var(--rule);
+    }
+    .tl-item { position: relative; padding-bottom: 40px; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -34px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--gold); border: 2px solid var(--white);
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+    .tl-year {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 4px;
+    }
+    .tl-role {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 2px;
+    }
+    .tl-company { font-size: 0.875rem; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
+    .tl-desc { font-size: 0.875rem; color: var(--ink-light); max-width: 580px; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--ink); color: #fff; }
+    .contact .section-label { color: var(--gold-lt); }
+    .contact .section-label::before { background: var(--gold-lt); }
+    .contact h2 { color: #fff; }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+    }
+    .contact-text { font-size: 1rem; color: #94a3b8; line-height: 1.8; margin-bottom: 32px; }
+    .contact-links { display: flex; flex-direction: column; gap: 14px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: #cbd5e1;
+      font-size: 0.9rem; transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--gold-lt); }
+    .contact-link-icon {
+      width: 36px; height: 36px; border-radius: 3px;
+      background: #ffffff10;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 13px 16px;
+      background: #ffffff08; border: 1px solid #ffffff18;
+      border-radius: 3px; color: #fff;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+      width: 100%;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: #64748b; }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--gold); }
+    .contact-form textarea { resize: vertical; min-height: 120px; }
+    .contact-form button {
+      padding: 13px 30px; align-self: flex-start;
+      background: var(--gold); color: var(--ink);
+      border: none; border-radius: 3px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .contact-form button:hover { background: var(--gold-lt); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060b17;
+      border-top: 1px solid #ffffff0d;
+      padding: 28px 40px;
+      text-align: center;
+      font-size: 0.8rem; color: #475569;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-card { display: none; }
+      .expertise-grid { grid-template-columns: 1fr; }
+      .exp-card { border-right: none; border-bottom: 1px solid var(--rule); }
+      .projects-grid { grid-template-columns: 1fr; }
+      .proj-card.featured { grid-column: auto; display: block; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">Alex<span>.</span>Morgan</a>
+    <ul class="nav-links">
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow">Software Architect</p>
+      <h1>Designing systems that <em>scale</em> with ambition.</h1>
+      <p class="hero-sub">
+        I architect enterprise-grade software — from distributed microservices
+        to AI-powered platforms — built for reliability, performance, and long-term growth.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-avatar">A</div>
+      <div class="hero-card-name">Alex Morgan</div>
+      <div class="hero-card-title">Software Architect</div>
+      <hr class="hero-card-divider">
+      <div class="hero-stat">
+        <div class="hero-stat-num">12+</div>
+        <div class="hero-stat-label">Years of Experience</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">40+</div>
+        <div class="hero-stat-label">Projects Delivered</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">8</div>
+        <div class="hero-stat-label">Enterprise Clients</div>
+      </div>
+      <div class="hero-tags">
+        <span class="hero-tag">Cloud</span>
+        <span class="hero-tag">Microservices</span>
+        <span class="hero-tag">AI/ML</span>
+        <span class="hero-tag">DevOps</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="expertise" id="expertise">
+  <div class="section-inner">
+    <p class="section-label">Core Competencies</p>
+    <h2>Where I add <span>the most value</span></h2>
+    <div class="expertise-grid">
+      <div class="exp-card">
+        <span class="exp-icon">🏗️</span>
+        <div class="exp-title">System Architecture</div>
+        <p class="exp-desc">Designing scalable, fault-tolerant distributed systems. From monolith migration to microservices decomposition and event-driven architectures.</p>
+        <div class="exp-skills">
+          <span class="exp-skill">Microservices</span>
+          <span class="exp-skill">Event-Driven</span>
+          <span class="exp-skill">DDD</span>
+          <span class="exp-skill">CQRS</span>
+        </div>
+      </div>
+      <div class="exp-card">
+        <span class="exp-icon">☁️</span>
+        <div class="exp-title">Cloud & Infrastructure</div>
+        <p class="exp-desc">Multi-cloud architecture on AWS, Azure, and GCP. Infrastructure as Code, container orchestration, and zero-downtime deployments.</p>
+        <div class="exp-skills">
+          <span class="exp-skill">AWS</span>
+          <span class="exp-skill">Kubernetes</span>
+          <span class="exp-skill">Terraform</span>
+          <span class="exp-skill">Docker</span>
+        </div>
+      </div>
+      <div class="exp-card">
+        <span class="exp-icon">🤖</span>
+        <div class="exp-title">AI & Automation</div>
+        <p class="exp-desc">Building autonomous agents, LLM-powered pipelines, and intelligent systems — including stock research agents and data processing workflows.</p>
+        <div class="exp-skills">
+          <span class="exp-skill">Claude API</span>
+          <span class="exp-skill">LangChain</span>
+          <span class="exp-skill">Python</span>
+          <span class="exp-skill">RAG</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-inner">
+    <p class="section-label">Selected Work</p>
+    <h2>Projects & <span>Portfolio</span></h2>
+    <div class="projects-grid">
+
+      <div class="proj-card featured">
+        <div class="proj-banner banner-blue" style="display:flex;align-items:center;justify-content:center;font-size:4rem;">📈</div>
+        <div class="proj-body">
+          <div class="proj-meta">AI Agent · Finance</div>
+          <div class="proj-title">Autonomous Stock Research Agent</div>
+          <p class="proj-desc">A fully autonomous AI agent that analyzes NVDA and other stocks every 60 minutes using Claude AI + live web search, then delivers formatted HTML email alerts — zero human interaction required. Deployed on GitHub Actions.</p>
+          <div class="proj-stack">
+            <span class="proj-tag">Claude API</span>
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">GitHub Actions</span>
+            <span class="proj-tag">SMTP</span>
+            <span class="proj-tag">Agentic Loop</span>
+          </div>
+          <a href="#" class="proj-link">View Project</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-banner banner-slate">🏢</div>
+        <div class="proj-body">
+          <div class="proj-meta">Enterprise · Cloud</div>
+          <div class="proj-title">Microservices Migration Platform</div>
+          <p class="proj-desc">Led the architecture and migration of a 2M-user monolithic application to 18 domain-driven microservices on AWS, reducing deployment time by 70%.</p>
+          <div class="proj-stack">
+            <span class="proj-tag">AWS EKS</span>
+            <span class="proj-tag">Kafka</span>
+            <span class="proj-tag">Node.js</span>
+            <span class="proj-tag">Terraform</span>
+          </div>
+          <a href="#" class="proj-link">View Project</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-banner banner-green">🔐</div>
+        <div class="proj-body">
+          <div class="proj-meta">Security · Infrastructure</div>
+          <div class="proj-title">Zero-Trust Security Framework</div>
+          <p class="proj-desc">Designed and implemented a zero-trust network architecture for a fintech client, achieving SOC 2 Type II compliance with full audit logging.</p>
+          <div class="proj-stack">
+            <span class="proj-tag">Vault</span>
+            <span class="proj-tag">Istio</span>
+            <span class="proj-tag">OIDC</span>
+            <span class="proj-tag">SIEM</span>
+          </div>
+          <a href="#" class="proj-link">View Project</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="timeline-section" id="experience">
+  <div class="section-inner">
+    <p class="section-label">Career Timeline</p>
+    <h2>Professional <span>Experience</span></h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2021 — Present</div>
+        <div class="tl-role">Principal Software Architect</div>
+        <div class="tl-company">TechCorp Global</div>
+        <p class="tl-desc">Leading architecture decisions across 6 product lines. Established architecture review board, defined cloud-native standards, and mentored a team of 14 engineers.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2017 — 2021</div>
+        <div class="tl-role">Senior Software Engineer → Architect</div>
+        <div class="tl-company">FinScale Solutions</div>
+        <p class="tl-desc">Promoted to architect after delivering a real-time payments platform processing $2B annually. Drove migration from on-prem to AWS with 99.99% uptime SLA.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2013 — 2017</div>
+        <div class="tl-role">Backend Engineer</div>
+        <div class="tl-company">DataBridge Systems</div>
+        <p class="tl-desc">Built high-throughput data pipelines handling 50M events/day. Developed internal tooling that reduced CI build times by 60%.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <p class="section-label">Get In Touch</p>
+    <h2>Let's build something <span style="color:var(--gold-lt)">exceptional</span></h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-text">Open to architecture consulting, technical advisory roles, and speaking engagements. I work with teams who want to build systems that last.</p>
+        <div class="contact-links">
+          <a href="mailto:alex@example.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            alex@example.com
+          </a>
+          <a href="https://linkedin.com" class="contact-link" target="_blank">
+            <div class="contact-link-icon">💼</div>
+            linkedin.com/in/alexmorgan
+          </a>
+          <a href="https://github.com" class="contact-link" target="_blank">
+            <div class="contact-link-icon">🐙</div>
+            github.com/alexmorgan
+          </a>
+        </div>
+      </div>
+      <div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Tell me about your project..."></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Alex Morgan</span> · Software Architect · Built with purpose.</p>
+</footer>
+
+<script>
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
+  });
+
+  // Contact form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#166534';
+    setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+
+  // Fade in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = 1; e.target.style.transform = 'translateY(0)'; } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.proj-card, .exp-card, .tl-item').forEach(el => {
+    el.style.opacity = 0; el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
